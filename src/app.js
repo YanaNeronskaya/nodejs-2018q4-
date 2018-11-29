@@ -1,10 +1,10 @@
-const models = require('../models');
-import config from '../config/initial-config';
+import { User, Product } from '../models';
+import config from '../config/app.config';
 
 console.log(config.appName);
 
-const user1 = new models.User();
-const product1 = new models.Product();
+const user = new User();
+const product = new Product();
 
-user1.initialLogs();
-product1.initialLogs();
+user.initialLogs();
+product.initialLogs();
