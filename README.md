@@ -3,5 +3,5 @@ Repository for NodeJS 2018Q4
 
 
 To run locally:
-\n npm i
-\n npm start
+npm i
+npm start
