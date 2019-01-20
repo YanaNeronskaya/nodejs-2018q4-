@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node --presets env,stage-2 src/app.js"
+    "start": "nodemon --exec babel-node --presets env,stage-2 src/app.js",
+    "streams": "node utils/streams.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,11 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
-    "csvjson": "^5.1.0"
+    "csv-parse": "^4.3.0",
+    "csvjson": "^5.1.0",
+    "fs": "0.0.1-security",
+    "minimist": "^1.2.0",
+    "path": "^0.12.7",
+    "through2": "^3.0.0"
   }
 }
