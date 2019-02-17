@@ -9,9 +9,9 @@ http.createServer()
         res.writeHead(200, {
             'Content-Type': 'text/html',
         });
-        const readable = fs.createReadStream('../index.html');
+        const readable = fs.createReadStream('index.html');
         readable
-            .pipe(through2((chunk, encoding, next) => {
+            .pipe(through2(function(chunk, encoding, next){
                 const msg = chunk.toString().replace('{message}', 'Hello World');
                 this.push(msg);
                 next();
