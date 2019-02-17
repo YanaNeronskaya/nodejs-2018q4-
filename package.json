@@ -32,7 +32,9 @@
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "lodash": "^4.17.11",
+    "jsonwebtoken": "^8.4.0",
     "minimist": "^1.2.0",
+    "passport": "^0.4.0",
     "path": "^0.12.7",
     "through2": "^3.0.0"
   }
