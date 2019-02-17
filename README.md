@@ -2,6 +2,8 @@
 Repository for NodeJS 2018Q4
 
 
-To run locally:
+**To run locally:**
 npm i; 
 npm start
+
+**Start streams for webstorm:** streams
