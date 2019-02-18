@@ -2,5 +2,61 @@ doctype html
 html
     head
         title= title
+        style(type="text/css").
+            html {
+                height: 98%;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                background-image: linear-gradient(to bottom right, #f6f8f9, #febbbb);
+            }
+            .form-name {
+                font-family: "Courier New", sans-serif;
+                font-weight: 700;
+                font-size: 25px;
+                color: cadetblue;
+            }
+            .btn-sbm {
+                background-color: cadetblue;
+                border-radius: 28px;
+                border: 1px solid cadetblue;
+                display: inline-block;
+                cursor: pointer;
+                color: #ffffff;
+                font-family: "Courier New", sans-serif;
+                font-size: 17px;
+                padding: 16px 31px;
+                text-decoration: none;
+                text-shadow: 0 1px 0 cadetblue;
+            }
+            .log-in-form {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                width: 150px;
+                height: 110px;;
+            }
+            .responseTitle {
+                font-family: "Courier New", sans-serif;
+                margin-top: 15px;
+                color: slategray;
+                font-weight: 700;
+            }
+            .response {
+                width: 300px;
+                margin-top: 15px;
+                word-break: break-word;
+            }
+            .title--authored {
+                font-family: "Courier New", sans-serif;
+                font-weight: 700;
+                font-size: 25px;
+                color: cadetblue;
+            }
     body
         block content

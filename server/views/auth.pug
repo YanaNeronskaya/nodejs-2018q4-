@@ -2,10 +2,11 @@ extends layout
 
 block content
     h1= title
+    span(class="form-name") Please, enter your credentials
     div(class="log-in-form")
         input(type="text" id="userName" size="40" required)
         input(type="password" id="userPassword" size="40" required)
-        input(type="button" id="submit" value="Submit")
+        input(type="button" class="btn-sbm" id="submit" value="Submit")
     script.
         document.getElementById('submit').addEventListener('click', function(){
             const userName = document.getElementById('userName').value;
@@ -28,7 +29,15 @@ block content
                     return response.json();
                 })
                 .then(function (data) {
-                    console.log(data)
+                    console.log(data);
+                    const titleBlock = document.createElement('span');
+                    titleBlock.className = 'responseTitle';
+                    titleBlock.innerText = data.message==="OK" ? "Successful signing: " : "Error with authentication :(";
+                    document.body.appendChild(titleBlock);
+                    const newBlock = document.createElement('div');
+                    newBlock.className = "response";
+                    newBlock.innerText = JSON.stringify(data);
+                    document.body.appendChild(newBlock);
                 })
                 .catch();
         });

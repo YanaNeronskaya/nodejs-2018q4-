@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-require('../config/auth')(passport);
+require('../config/passport')(passport);
 
 const Auth = require('../controllers/auth');
 const auth = new Auth();
@@ -42,20 +42,20 @@ router.get('/google', passport.authenticate('google', {
 router.get('/google/callback',
     passport.authenticate('google', {failureRedirect:'/auth/google/callback'}),
     (req, res) => {
-        res.redirect('/auth-google-happy');
+        res.redirect('/auth-happy');
     }
 );
 
 router.get('/facebook', passport.authenticate('facebook'));
 
 router.get('/facebook/callback',
-    passport.authenticate('facebook', { successRedirect: '/auth-facebook-yes',
-        failureRedirect: '/auth-fb-happy' }));
+    passport.authenticate('facebook', { successRedirect: '/auth-happy',
+        failureRedirect: '/auth-bad' }));
 
 router.get('/auth/twitter', passport.authenticate('twitter'));
 
 router.get('/auth/twitter/callback',
     passport.authenticate('twitter', { successRedirect: '/auth-twitter-yes',
-        failureRedirect: '/auth-twitter-happy' }));
+        failureRedirect: '/auth-bad' }));
 
 module.exports = router;
