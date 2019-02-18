@@ -35,11 +35,27 @@ router.post('/', function (req, res) {
     }
 });
 
-// /* Handle Login POST */
-// router.post('/', passport.authenticate('login', {
-//     successRedirect: '/userpage',
-//     failureRedirect: '/error',
-//     failureFlash : true
-// }));
+router.get('/google', passport.authenticate('google', {
+    scope: ['https://www.googleapis.com/auth/userinfo.profile']
+}));
+
+router.get('/google/callback',
+    passport.authenticate('google', {failureRedirect:'/auth/google/callback'}),
+    (req, res) => {
+        res.redirect('/auth-google-happy');
+    }
+);
+
+router.get('/facebook', passport.authenticate('facebook'));
+
+router.get('/facebook/callback',
+    passport.authenticate('facebook', { successRedirect: '/auth-facebook-yes',
+        failureRedirect: '/auth-fb-happy' }));
+
+router.get('/auth/twitter', passport.authenticate('twitter'));
+
+router.get('/auth/twitter/callback',
+    passport.authenticate('twitter', { successRedirect: '/auth-twitter-yes',
+        failureRedirect: '/auth-twitter-happy' }));
 
 module.exports = router;

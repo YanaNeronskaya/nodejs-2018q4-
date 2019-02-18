@@ -23,14 +23,4 @@ app.use(flash());
 
 app.use('/', router);
 
-// passport.serializeUser(function(user, done) {
-//     done(null, user.name);
-// });
-//
-// passport.deserializeUser(function(id, done) {
-//     User.findById(id, function(err, user) {
-//         done(err, user);
-//     });
-// });
-
 module.exports = app;
