@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const Auth = require('../controllers/auth');
+const passport = require('passport');
+require('../config/auth')(passport);
 
+const Auth = require('../controllers/auth');
 const auth = new Auth();
 
 router.get('/',
     function (req, res) {
-        res.render('auth',  { basedir: '../server/script' });
+        res.render('auth',  { message: req.flash('message') });
     });
 
-router.post('/', function(req,res){
+router.post('/', function (req, res) {
     const { name, password } = req.body;
 
     console.log("User name = "+name+", password is "+password);
@@ -32,5 +34,12 @@ router.post('/', function(req,res){
         res.json(response);
     }
 });
+
+// /* Handle Login POST */
+// router.post('/', passport.authenticate('login', {
+//     successRedirect: '/userpage',
+//     failureRedirect: '/error',
+//     failureFlash : true
+// }));
 
 module.exports = router;
