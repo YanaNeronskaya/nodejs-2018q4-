@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node --presets env,stage-2 src/app.js",
+    "start": "nodemon --exec babel-node --presets env,stage-2 server/index.js",
     "streams": "node utils/streams.js"
   },
   "repository": {
@@ -34,8 +34,8 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
-    "lodash": "^4.17.11",
     "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
     "minimist": "^1.2.0",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
@@ -44,7 +44,13 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "path": "^0.12.7",
+    "pg": "^7.8.1",
+    "pg-hstore": "^2.3.2",
     "pug": "^2.0.3",
+    "sequelize": "^4.42.0",
+    "sequelize-cli": "^5.4.0",
+    "sqlite3": "^4.0.6",
+    "tedious": "^5.0.3",
     "through2": "^3.0.0"
   }
 }

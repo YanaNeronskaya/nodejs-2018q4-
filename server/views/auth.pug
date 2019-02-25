@@ -29,7 +29,6 @@ block content
                     return response.json();
                 })
                 .then(function (data) {
-                    console.log(data);
                     const titleBlock = document.createElement('span');
                     titleBlock.className = 'responseTitle';
                     titleBlock.innerText = data.message==="OK" ? "Successful signing: " : "Error with authentication :(";
