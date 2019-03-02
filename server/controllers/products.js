@@ -1,10 +1,10 @@
 const _ = require('lodash');
 const jwt  = require('jsonwebtoken');
-const products = require('../models/products');
+const { Product } = require('../../db/setup');
 
 module.exports = {
     getAllProducts: () => {
-        const data = products;
+        const data = Product.findAll();
 
         if(data) {
             return Promise.resolve({
@@ -17,6 +17,14 @@ module.exports = {
     },
     createNewProduct: () => {
         const data = 'Create product';
+        Product
+            .findOrCreate({})
+            .spread((user, created) => {
+                console.log(user.get({
+                    plain: true
+                }));
+                console.log(created)
+            });
 
         return Promise.resolve({
             data: data,
@@ -24,7 +32,7 @@ module.exports = {
         });
     },
     getProductById: id => {
-        const product = _.find(products, { id });
+        const product = Product.findById(id);
 
         if(product) {
             return Promise.resolve({
@@ -36,7 +44,7 @@ module.exports = {
         }
     },
     getProductReviewsById: id => {
-        const product = _.find(products, { id });
+        const product = Product.findAll({ where: { id: id } });
 
         if(product) {
             return {
