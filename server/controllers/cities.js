@@ -1,5 +1,6 @@
 //const MongoClient = require('mongodb').MongoClient;
 const CityModel = require('../models/city');
+const addLastModifiedData = require('../../db/mongo/getLastModifiedData');
 //const url = "mongodb://localhost:27017/";
 
 const getRandomInt = (min, max) => {
@@ -7,6 +8,16 @@ const getRandomInt = (min, max) => {
 };
 
 module.exports = {
+    getAllCities: () => {
+        const query = CityModel.find({});
+
+        return new Promise((resolve, reject) => {
+            query.exec(function (err, docs) {
+                if (err) reject(err);
+                resolve(docs);
+            });
+        });
+    },
     getRandomCity: () => {
         const number = getRandomInt(0, 5);
         const query = CityModel.find({});
@@ -31,7 +42,9 @@ module.exports = {
     },
     createNewCity: (data) => {
         return new Promise((resolve, reject) => {
-            CityModel.insertMany(data, function (err, res) {
+            const modifiedData = addLastModifiedData();
+
+            CityModel.insertMany({...data, ...modifiedData}, function (err, res) {
                 if (err) reject(err);
                 const error = res[0].validateSync();
                 if (error) throw new Error(error);
@@ -42,9 +55,11 @@ module.exports = {
     },
     updateCityById: (id, data) => {
         return new Promise((resolve, reject) => {
-            CityModel.findOneAndUpdate({_id:id}, data, {}, function (err, res) {
+            const modifiedData = addLastModifiedData();
+
+            CityModel.findOneAndUpdate({_id:id}, {...data, ...modifiedData}, {}, function (err, res) {
                 if (err) {
-                    CityModel.create(data, function (err, res) {
+                    CityModel.create({...data, ...modifiedData}, function (err, res) {
                         if (err) reject(err);
                         resolve(res);
                     })

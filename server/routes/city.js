@@ -1,6 +1,12 @@
 const router = require('express').Router();
 const citiesController = require('../controllers/cities');
 
+router.get('/', (req, res) => {
+    citiesController
+        .getAllCities()
+        .then(city => res.json(city));
+});
+
 router.get('/randomCity', (req, res) => {
     citiesController
         .getRandomCity()
