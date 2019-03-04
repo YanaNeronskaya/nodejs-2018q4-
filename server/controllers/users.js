@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const {User} = require('../../db/setup');
+const {User} = require('../../db/postgres/setup');
 
 module.exports = {
     getAllUsers: () => {

@@ -1,8 +1,36 @@
 const _ = require('lodash');
 const jwt  = require('jsonwebtoken');
-const { Product } = require('../../db/postgres/setup');
+//const MongoClient = require('mongodb').MongoClient;
+const CityModel = require('../models/city');
+//const url = "mongodb://localhost:27017/";
+
+const getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+};
 
 module.exports = {
+    getRandomCity: () => {
+        const number = getRandomInt(0, 5);
+        const query = CityModel.find({});
+
+        return new Promise((resolve, reject) => {
+            query.exec(function (err, docs) {
+                if (err) reject(err);
+                resolve(docs[number]);
+            });
+        });
+
+        // return new Promise((resolve, reject) => {
+        //     MongoClient.connect(url, function (err, db) {
+        //         if (err) throw err;
+        //         const dbo = db.db("nodejs-db");
+        //         dbo.collection("cities").find({}).toArray(function(err, result) {
+        //             if (err) reject(err);
+        //             resolve(result[number]);
+        //         });
+        //     })
+        // })
+    },
     getAllProducts: () => {
         const data = Product.findAll();
 
