@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const {User} = require('../../db/postgres/setup');
+const { User } = require('../../db/postgres/setup');
+const UserModel = require('../models/city');
 
 module.exports = {
     getAllUsers: () => {
@@ -16,4 +17,12 @@ module.exports = {
             Promise.reject(`Error. Users were not not found`);
         }
     },
+    deleteUserById: id => {
+        return new Promise((resolve, reject) => {
+            UserModel.deleteOne({id: id}, function (err, res) {
+                if (err) reject(err);
+                resolve(res);
+            });
+        });
+    }
 };
