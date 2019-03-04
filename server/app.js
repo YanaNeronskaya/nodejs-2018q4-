@@ -6,11 +6,13 @@ const router = require('./routes');
 const passport = require('passport');
 const flash=require("connect-flash");
 const expressSession = require('express-session');
-const { initDb } = require('../db/setup');
+const { initDb } = require('../db/postgres/setup');
+const { initMongoDb } = require('../db/mongo/setup');
 
 app.use(expressSession({secret: 'mySecretKey'}));
 
 initDb();
+initMongoDb();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
