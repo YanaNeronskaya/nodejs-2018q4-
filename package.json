@@ -52,6 +52,8 @@
     "sequelize": "^4.42.0",
     "sequelize-cli": "^5.4.0",
     "sqlite3": "^4.0.6",
+    "swagger": "^0.7.5",
+    "swagger-cli": "^2.2.1",
     "tedious": "^5.0.3",
     "through2": "^3.0.0"
   }

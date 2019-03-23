@@ -1,0 +1,375 @@
+---
+swagger: "2.0"
+info:
+  description: Api documentation for training Frontcamp
+  version: "1.0"
+  title: Frontcamp
+host: virtserver.swaggerhub.com
+basePath: /YanaNeronskaya/Nodejs-Frontcamp/1.0
+schemes:
+- https
+paths:
+  /api/products:
+    get:
+      tags:
+      - product
+      summary: Get all the products
+      operationId: getAllProducts
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+        400:
+          description: Invalid status value
+    post:
+      tags:
+      - product
+      summary: Add a new product
+      operationId: createNewProduct
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Product object that needs to be added
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        405:
+          description: Invalid input
+    delete:
+      tags:
+      - product
+      summary: Delete existing product by id
+      operationId: deleteProductById
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: id
+        description: Id that need to be considered for filter
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        405:
+          description: Invalid input
+  /api/products/:id:
+    get:
+      tags:
+      - product
+      summary: Finds Product by id
+      operationId: getProductById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: query
+        description: Id that need to be considered for filter
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: object
+        400:
+          description: Invalid status value
+  /api/products/:id/reviews:
+    get:
+      tags:
+      - product
+      summary: Finds Product by id and returns its reviews
+      operationId: getProductReviewsById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: query
+        description: Id that need to be considered for filter
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+        400:
+          description: Invalid status value
+  /api/users:
+    get:
+      tags:
+      - user
+      summary: Finds all users
+      operationId: getAllUsers
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        400:
+          description: Invalid status value
+    delete:
+      tags:
+      - user
+      summary: Delete existing user by id
+      operationId: deleteUserById
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: id
+        description: Id that need to be considered for filter
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        405:
+          description: Invalid input
+  /api/cities:
+    get:
+      tags:
+      - city
+      summary: Get all the existing cities
+      operationId: getAllCities
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/City'
+        400:
+          description: Invalid status value
+  /api/cities/randomCity:
+    get:
+      tags:
+      - city
+      summary: Get random city from DB
+      operationId: getRandomCity
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: object
+        400:
+          description: Invalid status value
+    post:
+      tags:
+      - city
+      summary: Add a new city
+      operationId: createNewCity
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: City object that needs to be added
+        required: true
+        schema:
+          $ref: '#/definitions/City'
+      responses:
+        405:
+          description: Invalid input
+    delete:
+      tags:
+      - city
+      summary: Delete existing city by id
+      operationId: deleteCityById
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: id
+        description: Id that need to be considered for filter
+        required: true
+        schema:
+          $ref: '#/definitions/City'
+      responses:
+        405:
+          description: Invalid input
+  /auth:
+    get:
+      tags:
+      - auth
+      summary: Gets initial page for authentication
+      operationId: render
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+    post:
+      tags:
+      - auth
+      summary: Check credentials for authentication and return result page
+      operationId: checkExistingUser
+      consumes:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        405:
+          description: Invalid input
+  /auth/google:
+    get:
+      tags:
+      - auth
+      summary: Authentication with google API
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth/google/callback:
+    get:
+      tags:
+      - auth
+      summary: Google authentication callback
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth/facebook:
+    get:
+      tags:
+      - auth
+      summary: Authentication with facebook API
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth/facebook/callback:
+    get:
+      tags:
+      - auth
+      summary: Facebook authentication callback
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth/twitter:
+    get:
+      tags:
+      - auth
+      summary: Authentication with twitter API
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth/twitter/callback:
+    get:
+      tags:
+      - auth
+      summary: Twitter authentication callback
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth-happy:
+    get:
+      tags:
+      - auth
+      summary: Gets page with the result of the authentication
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+definitions:
+  Product:
+    type: object
+    properties:
+      _id:
+        type: string
+      name:
+        type: integer
+        format: int64
+      reviews:
+        type: array
+        items:
+          type: string
+    xml:
+      name: Product
+  User:
+    type: object
+    properties:
+      _id:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+  City:
+    type: object
+    properties:
+      name:
+        type: string
+      country:
+        type: string
+      capital:
+        type: boolean
+      location:
+        type: object
+        properties: {}
