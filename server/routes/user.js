@@ -6,4 +6,12 @@ router.get('/', (req, res) => {
         .then(users => res.json(users));
 });
 
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+
+    usersController
+        .deleteUserById(id)
+        .then((city) => res.json(city));
+});
+
 module.exports = router;

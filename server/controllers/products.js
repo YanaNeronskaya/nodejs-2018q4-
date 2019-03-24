@@ -1,58 +1,63 @@
-const _ = require('lodash');
 const jwt  = require('jsonwebtoken');
-const { Product } = require('../../db/setup');
+const ProductModel = require('../models/product');
+const { Product } = require('../../db/postgres/setup');
+const addLastModifiedData = require('../../db/mongo/getLastModifiedData');
 
 module.exports = {
     getAllProducts: () => {
-        const data = Product.findAll();
-
-        if(data) {
-            return Promise.resolve({
-                data: data,
-                token: data ? jwt.sign({ products: 'all' }, 'RESTFULAPIs') : ''
-            })
-        } else {
-            Promise.reject(`Error. There aren't products.`);
-        }
+        return new Promise((resolve, reject) => {
+            ProductModel.find({}, function (err, res) {
+                if (err) reject(err);
+                resolve({
+                    data: res,
+                    token: res ? jwt.sign({ products: 'all' }, 'RESTFULAPIs') : ''
+                });
+            });
+        });
     },
     createNewProduct: () => {
-        const data = 'Create product';
-        Product
-            .findOrCreate({})
-            .spread((user, created) => {
-                console.log(user.get({
-                    plain: true
-                }));
-                console.log(created)
-            });
+        return new Promise((resolve, reject) => {
+            const modifiedData = addLastModifiedData();
 
-        return Promise.resolve({
-            data: data,
-            token: data ? jwt.sign({ products: 'newproduct' }, 'RESTFULAPIs') : ''
+            ProductModel.insertMany({...data, ...modifiedData}, function (err, res) {
+                if (err) reject(err);
+                const error = res[0].validateSync();
+                if (error) throw new Error(error);
+                console.log("Number of products inserted: " + res.length);
+                resolve(res);
+            });
         });
     },
     getProductById: id => {
-        const product = Product.findById(id);
-
-        if(product) {
-            return Promise.resolve({
-                data: product,
-                token: product ? jwt.sign({ id: id, name: product.name }, 'RESTFULAPIs') : ''
+        return new Promise((resolve, reject) => {
+            ProductModel.find({id: id}, function (err, res) {
+                if (err) reject(err);
+                resolve({
+                    data: res,
+                    token: res ? jwt.sign({ id: id, name: res.name }, 'RESTFULAPIs') : ''
+                });
             });
-        } else {
-            Promise.reject(`Error. Product with id "${id}" not found`);
-        }
+        });
     },
     getProductReviewsById: id => {
-        const product = Product.findAll({ where: { id: id } });
+        return new Promise((resolve, reject) => {
+            const query = ProductModel.find({}).select('reviews');
 
-        if(product) {
-            return {
-                data: product.reviews,
-                token: product ? jwt.sign({ id: id, name: product.name, reviews: product.reviews }, 'RESTFULAPIs') : ''
-            };
-        } else {
-            Promise.reject(`Error. Product with id "${id}" not found`);
-        }
+            query.exec(function (err, res) {
+                if (err) reject(err);
+                resolve({
+                    data: res,
+                    token: res ? jwt.sign({ id: id, name: res.name, reviews: res.reviews }, 'RESTFULAPIs') : ''
+                });
+            });
+        });
+    },
+    deleteProductById: id => {
+        return new Promise((resolve, reject) => {
+            ProductModel.deleteOne({id: id}, function (err, res) {
+                if (err) reject(err);
+                resolve(res);
+            });
+        });
     }
 };

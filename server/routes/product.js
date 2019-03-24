@@ -29,4 +29,12 @@ router.get('/:id/reviews', (req, res) => {
         .then(reviews => res.json(reviews), () => res.json(`Error. Product with id "${id}" not found`));
 });
 
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+
+    prouductsController
+        .deleteProductById(id)
+        .then(reviews => res.json(reviews), () => res.json(`Error. Product with id "${id}" not found`));
+});
+
 module.exports = router;
