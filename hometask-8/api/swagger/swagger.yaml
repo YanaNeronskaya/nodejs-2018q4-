@@ -1,0 +1,475 @@
+---
+swagger: "2.0"
+info:
+  description: Api documentation for training Frontcamp
+  version: "1.0"
+  title: Frontcamp
+host: virtserver.swaggerhub.com
+basePath: /YanaNeronskaya/Nodejs-Frontcamp/1.0
+tags:
+- name: auth
+  description: Auth API
+- name: city
+  description: Cities API
+- name: user
+  description: User API
+- name: product
+  description: Product API
+- name: review
+  description: Reviews for selected product
+schemes:
+- https
+paths:
+  /api/products:
+    get:
+      tags:
+      - product
+      summary: Get all the products
+      operationId: getProducts
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductSchema'
+        400:
+          description: Invalid status value
+    post:
+      tags:
+      - product
+      summary: Add a new product
+      operationId: addProduct
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Product object that needs to be added
+        required: true
+        schema:
+          $ref: '#/definitions/ProductSchema'
+      responses:
+        405:
+          description: Invalid input
+    delete:
+      tags:
+      - product
+      summary: Delete existing product by id
+      operationId: deleteProductById
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: id
+        description: Id that need to be considered for filter
+        required: true
+        schema:
+          $ref: '#/definitions/ProductSchema'
+      responses:
+        405:
+          description: Invalid input
+    x-swagger-router-controller: products
+  /api/products/:id:
+    get:
+      tags:
+      - product
+      summary: Finds Product by id
+      operationId: findProductById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: query
+        description: Id that need to be considered for filter
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: object
+        400:
+          description: Invalid status value
+  /api/products/:id/reviews:
+    get:
+      tags:
+      - product
+      summary: Finds Product by id and returns its reviews
+      operationId: getProductReviewsById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: id
+        in: query
+        description: Id that need to be considered for filter
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductSchema'
+        400:
+          description: Invalid status value
+  /api/users:
+    get:
+      tags:
+      - user
+      summary: Finds all users
+      operationId: getAllUsers
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UserSchema'
+        400:
+          description: Invalid status value
+    delete:
+      tags:
+      - user
+      summary: Delete existing user by id
+      operationId: deleteUserById
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: id
+        description: Id that need to be considered for filter
+        required: true
+        schema:
+          $ref: '#/definitions/UserSchema'
+      responses:
+        405:
+          description: Invalid input
+  /api/cities:
+    get:
+      tags:
+      - city
+      summary: Get all the existing cities
+      operationId: getAllCities
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CitySchema'
+        400:
+          description: Invalid status value
+  /api/cities/randomCity:
+    get:
+      tags:
+      - city
+      summary: Get random city from DB
+      operationId: getRandomCity
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: object
+        400:
+          description: Invalid status value
+    post:
+      tags:
+      - city
+      summary: Add a new city
+      operationId: createNewCity
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: City object that needs to be added
+        required: true
+        schema:
+          $ref: '#/definitions/CitySchema'
+      responses:
+        405:
+          description: Invalid input
+    delete:
+      tags:
+      - city
+      summary: Delete existing city by id
+      operationId: deleteCityById
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: id
+        description: Id that need to be considered for filter
+        required: true
+        schema:
+          $ref: '#/definitions/CitySchema'
+      responses:
+        405:
+          description: Invalid input
+  /auth:
+    get:
+      tags:
+      - auth
+      summary: Gets initial page for authentication
+      operationId: render
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+    post:
+      tags:
+      - auth
+      summary: Check credentials for authentication and return result page
+      operationId: checkExistingUser
+      consumes:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        405:
+          description: Invalid input
+  /auth/google:
+    get:
+      tags:
+      - auth
+      summary: Authentication with google API
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth/google/callback:
+    get:
+      tags:
+      - auth
+      summary: Google authentication callback
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth/facebook:
+    get:
+      tags:
+      - auth
+      summary: Authentication with facebook API
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth/facebook/callback:
+    get:
+      tags:
+      - auth
+      summary: Facebook authentication callback
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth/twitter:
+    get:
+      tags:
+      - auth
+      summary: Authentication with twitter API
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth/twitter/callback:
+    get:
+      tags:
+      - auth
+      summary: Twitter authentication callback
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+  /auth-happy:
+    get:
+      tags:
+      - auth
+      summary: Gets page with the result of the authentication
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Invalid status value
+definitions:
+  AuthBodySchema:
+    type: object
+    required:
+    - password
+    - username
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+    example:
+      username: maryna
+      password: maryna1!
+  AuthResponseSchema:
+    type: object
+    required:
+    - password
+    - token
+    - username
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+      token:
+        type: string
+    example:
+      username: maryna
+      password: maryna1!
+      token: q1w2d3r4t5y6y67u89i90jgghw
+  CitySchema:
+    type: object
+    required:
+    - name
+    properties:
+      name:
+        type: string
+      country:
+        type: string
+      capital:
+        type: boolean
+        default: false
+      location:
+        $ref: '#/definitions/LocationSchema'
+      lastModifiedDate:
+        type: string
+    example:
+      name: Minsk
+      country: Belarus
+      capital: true
+  LocationSchema:
+    type: object
+    properties:
+      lat:
+        type: number
+      long:
+        type: number
+    example:
+      lat: 58.06
+      long: 0.04
+  UserSchema:
+    type: object
+    required:
+    - email
+    - password
+    - username
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+      email:
+        type: string
+      lastModifiedDate:
+        type: string
+    example:
+      username: maryna
+      password: maryna1
+      email: maryna@gmail.com
+  ProductSchema:
+    type: object
+    required:
+    - id
+    - title
+    properties:
+      id:
+        type: string
+      title:
+        type: string
+      price:
+        type: string
+      reviews:
+        type: string
+      lastModifiedDate:
+        type: string
+    example:
+      id: 1
+      title: First product
+      price: 100
+      reviews: new review
+  ReviewSchema:
+    type: object
+    properties:
+      reviews:
+        type: string
+    example:
+      reviews: the first review
+  HelloWorldResponse:
+    required:
+    - message
+    properties:
+      message:
+        type: string
+  ErrorResponse:
+    required:
+    - code
+    - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+    example:
+      code: 404
+      message: Not found
